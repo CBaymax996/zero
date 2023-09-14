@@ -1,4 +1,4 @@
-package top.cbaymax.matrix.silk.dashboard.controller.jpa;
+package top.cbaymax.matrix.silk.dashboard.manager.repository.jpa;
 
 
 import jakarta.persistence.*;
