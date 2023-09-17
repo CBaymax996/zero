@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import top.cbaymax.matrix.silk.dashboard.infrastructure.log.SilkLog;
 import top.cbaymax.matrix.silk.dashboard.manager.repository.jpa.UserDO;
 import top.cbaymax.matrix.silk.dashboard.infrastructure.error.SilkError;
 import top.cbaymax.matrix.silk.dashboard.domain.entity.user.UserError;
@@ -15,6 +16,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
+@ResponseBody
 public class DemoController {
 
     @Autowired
@@ -22,7 +24,7 @@ public class DemoController {
 
 
     @RequestMapping("/hi")
-    @ResponseBody
+    @SilkLog
     public String sayHi(String name) {
         return String.format("Hi, %s", Optional.ofNullable(name).orElse("Somebody"));
     }
@@ -43,4 +45,13 @@ public class DemoController {
         // This returns a JSON or XML with the users
         throw new SilkError(UserError.user_not_find);
     }
+
+
+    @GetMapping(path = "/e1")
+    @ResponseBody
+    public Iterable<UserDO> e1() {
+        // This returns a JSON or XML with the users
+        throw new RuntimeException("123");
+    }
+
 }

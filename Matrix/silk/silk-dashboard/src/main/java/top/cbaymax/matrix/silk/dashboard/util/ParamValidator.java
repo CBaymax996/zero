@@ -12,4 +12,10 @@ public class ParamValidator {
         }
     }
 
+    public static void notNull(Object o, String message) {
+        if (o == null) {
+            throw new SilkError(CommonError.invalid_param, message);
+        }
+    }
+
 }
