@@ -1,4 +1,4 @@
-package top.cbaymax.matrix.silk.dashboard.facade.domain.base;
+package top.cbaymax.matrix.silk.dashboard.facade.model.base;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

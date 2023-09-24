@@ -9,8 +9,8 @@ spring:
   #    driver-class-name: com.mysql.cj.jdbc.Driver
   #    url: jdbc:mysql://localhost:3306/silk?useSSL=false
   jpa:
-    hibernate:
-      ddl-auto: none
+    #    hibernate:
+    #      ddl-auto:
     show-sql: true
 
 

@@ -3,18 +3,16 @@ package top.cbaymax.matrix.silk.dashboard.facade.controller.config.wrapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.Nonnull;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
-import top.cbaymax.matrix.silk.dashboard.facade.domain.base.Result;
-import top.cbaymax.matrix.silk.dashboard.infrastructure.error.CommonError;
-import top.cbaymax.matrix.silk.dashboard.infrastructure.error.SilkError;
+import top.cbaymax.matrix.silk.dashboard.facade.model.base.Result;
 
 import java.util.Optional;
 

@@ -8,14 +8,14 @@ import java.lang.annotation.Target;
 /**
  * @author 褚浩
  */
-@Target(value = {ElementType.TYPE, ElementType.METHOD})
+@Target(value = {ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface SilkLog {
 
     /**
-     * default All Content {@link LogContent}
+     * default All Content {@link LogInfo}
      */
-    LogContent[] include() default {};
+    LogInfo[] includes() default {};
 
-    LogContent[] exclude() default {};
+    LogInfo[] excludes() default {};
 }

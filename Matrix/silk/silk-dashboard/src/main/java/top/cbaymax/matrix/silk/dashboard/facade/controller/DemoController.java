@@ -5,11 +5,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import top.cbaymax.matrix.silk.dashboard.infrastructure.log.SilkLog;
-import top.cbaymax.matrix.silk.dashboard.manager.repository.jpa.UserDO;
-import top.cbaymax.matrix.silk.dashboard.infrastructure.error.SilkError;
 import top.cbaymax.matrix.silk.dashboard.domain.entity.user.UserError;
+import top.cbaymax.matrix.silk.dashboard.facade.controller.model.UserVO;
+import top.cbaymax.matrix.silk.dashboard.infrastructure.error.SilkError;
+import top.cbaymax.matrix.silk.dashboard.infrastructure.log.SilkLog;
 import top.cbaymax.matrix.silk.dashboard.manager.repository.UserRepository;
+import top.cbaymax.matrix.silk.dashboard.manager.repository.model.UserDO;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,6 +51,9 @@ public class DemoController {
     @GetMapping(path = "/e1")
     @ResponseBody
     public Iterable<UserDO> e1() {
+        UserDO userDO = new UserDO();
+        new UserVO(userDO.getName(),
+                userDO.getName());
         // This returns a JSON or XML with the users
         throw new RuntimeException("123");
     }
