@@ -1,38 +1,35 @@
 package top.cbaymax.matrix.silk.dashboard.facade.model.base;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import top.cbaymax.matrix.silk.dashboard.infrastructure.error.ErrorCode;
 import top.cbaymax.matrix.silk.dashboard.infrastructure.error.SilkError;
 
 import java.io.Serializable;
 
-@Data
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@NoArgsConstructor
-@AllArgsConstructor
 public class Result<T> implements Serializable {
 
-    private boolean success;
+    public boolean success;
 
-    private T data;
+    public T data;
 
-    private String errorCode;
+    public String errorCode;
 
-    private String errorMessage;
+    public String errorMessage;
 
-    public static <T> Result<T> buildSuccess(T data) {
-        return new Result<>(true, data, null, null);
+
+    public Result(T data) {
+        this.success = Boolean.TRUE;
+        this.data = data;
     }
 
-    public static <T> Result<T> buildError(ErrorCode error) {
-        return new Result<>(false, null, error.getCode(), error.getMessage());
+    public Result(SilkError error) {
+        this.errorCode = error.code;
+        this.errorMessage = error.message;
     }
 
-    public static <T> Result<T> buildError(SilkError error) {
-        return new Result<>(false, null, error.getCode(), error.getMessage());
+    public Result(String errorCode, String errorMessage) {
+        this.errorCode = errorCode;
+        this.errorMessage = errorMessage;
     }
-
 }

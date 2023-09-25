@@ -1,15 +1,10 @@
 package top.cbaymax.matrix.silk.dashboard.infrastructure.error;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
-@Data
-@EqualsAndHashCode(callSuper = true)
 public class SilkError extends RuntimeException {
 
-    private String code;
+    public String code;
 
-    private String message;
+    public String message;
 
     public SilkError(ErrorCode errorCode) {
         this.code = errorCode.getCode();

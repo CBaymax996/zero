@@ -21,14 +21,14 @@ public class LogAspect {
         LogContext logContext = new LogContext(point);
         try {
             Object response = point.proceed();
-            logContext.setResponse(response);
+            logContext.response = response;
             if (response instanceof Result<?> formatResponse) {
-                logContext.setSuccess(formatResponse.isSuccess());
+                logContext.success = formatResponse.success;
             }
             return response;
         } catch (Throwable t) {
-            logContext.setSuccess(false);
-            logContext.setError(t);
+            logContext.success = false;
+            logContext.error = t;
             throw t;
         } finally {
             logContext.log();

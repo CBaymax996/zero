@@ -14,8 +14,8 @@ public class ExceptionWrapper {
     @ExceptionHandler(Exception.class)
     public Result<?> exceptionHandler(Exception e) {
         if (e instanceof SilkError) {
-            return Result.buildError((SilkError) e);
+            return new Result<>((SilkError) e);
         }
-        return Result.buildError(CommonError.unknown_internal_exception);
+        return new Result<>(new SilkError(CommonError.unknown_internal_exception));
     }
 }

@@ -1,13 +1,12 @@
 package top.cbaymax.matrix.silk.dashboard.infrastructure.log;
 
-import lombok.Data;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 
 import java.lang.reflect.Method;
 import java.util.*;
 
-@Data
 public class LogContext {
 
     private final Set<LogInfo> logInfos;
@@ -21,11 +20,11 @@ public class LogContext {
 
     private final Object[] request;
 
-    private Object response;
+    public Object response;
 
-    private boolean success = true;
+    public boolean success = true;
 
-    private Throwable error;
+    public Throwable error;
 
     public LogContext(ProceedingJoinPoint pjp) {
 

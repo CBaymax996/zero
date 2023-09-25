@@ -7,12 +7,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import top.cbaymax.matrix.silk.dashboard.domain.entity.user.UserError;
 import top.cbaymax.matrix.silk.dashboard.facade.controller.model.UserVO;
+import top.cbaymax.matrix.silk.dashboard.facade.model.base.PageResult;
+import top.cbaymax.matrix.silk.dashboard.gateway.repository.UserRepository;
+import top.cbaymax.matrix.silk.dashboard.gateway.repository.model.UserDO;
 import top.cbaymax.matrix.silk.dashboard.infrastructure.error.SilkError;
 import top.cbaymax.matrix.silk.dashboard.infrastructure.log.SilkLog;
-import top.cbaymax.matrix.silk.dashboard.manager.repository.UserRepository;
-import top.cbaymax.matrix.silk.dashboard.manager.repository.model.UserDO;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -52,8 +54,9 @@ public class DemoController {
     @ResponseBody
     public Iterable<UserDO> e1() {
         UserDO userDO = new UserDO();
-        new UserVO(userDO.getName(),
-                userDO.getName());
+        PageResult<UserVO> userVOPageResult = new PageResult<>(List.of(new UserVO("1", "2")));
+        new UserVO(userDO.name,
+                userDO.name);
         // This returns a JSON or XML with the users
         throw new RuntimeException("123");
     }

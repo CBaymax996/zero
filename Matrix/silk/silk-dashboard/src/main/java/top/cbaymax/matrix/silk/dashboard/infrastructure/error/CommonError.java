@@ -1,10 +1,5 @@
 package top.cbaymax.matrix.silk.dashboard.infrastructure.error;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-@Getter
-@AllArgsConstructor
 public enum CommonError implements ErrorCode {
 
     unknown_internal_exception("SYS_0001", "系统内部异常"),
@@ -14,6 +9,21 @@ public enum CommonError implements ErrorCode {
     timeout("SYS_0002", "超时"),
 
     ;
-    final String code;
-    final String message;
+    public final String code;
+    public final String message;
+
+    CommonError(String code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+
+    @Override
+    public String getCode() {
+        return code;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }
 }

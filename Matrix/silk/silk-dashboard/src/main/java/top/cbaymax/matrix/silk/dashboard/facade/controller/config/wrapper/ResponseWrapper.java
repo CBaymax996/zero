@@ -51,7 +51,7 @@ public class ResponseWrapper implements ResponseBodyAdvice<Object> {
             return body;
         }
         if (body instanceof String) {
-            Result<String> objectResult = Result.buildSuccess((String) body);
+            Result<String> objectResult = new Result<>((String) body);
             HttpHeaders headers = response.getHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             try {
@@ -60,6 +60,6 @@ public class ResponseWrapper implements ResponseBodyAdvice<Object> {
                 throw new RuntimeException(e);
             }
         }
-        return Result.buildSuccess(body);
+        return new Result<>(body);
     }
 }
