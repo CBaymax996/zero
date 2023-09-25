@@ -27,9 +27,4 @@ public class Result<T> implements Serializable {
         this.errorCode = error.code;
         this.errorMessage = error.message;
     }
-
-    public Result(String errorCode, String errorMessage) {
-        this.errorCode = errorCode;
-        this.errorMessage = errorMessage;
-    }
 }

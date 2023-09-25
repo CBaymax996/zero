@@ -1,5 +1,7 @@
 package top.cbaymax.matrix.silk.dashboard.facade.model.base;
 
+import jakarta.annotation.Nullable;
+
 import java.util.List;
 
 /**
@@ -26,10 +28,6 @@ public class PageResult<T> extends Result<List<T>> {
         super(data);
     }
 
-    public PageResult(String errorCode, String errorMessage) {
-        super(errorCode, errorMessage);
-    }
-
 
     public void setPageInfo(Long total, Integer pageNum, Integer pageSize) {
         this.total = total;
@@ -37,6 +35,12 @@ public class PageResult<T> extends Result<List<T>> {
         this.pageSize = pageSize;
     }
 
+    /**
+     * 获取总页数
+     *
+     * @return pageTotal
+     */
+    @Nullable
     public Integer getPageTotal() {
         if (this.total == null || this.pageSize == null) {
             return null;
