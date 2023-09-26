@@ -1,6 +1,5 @@
 package top.cbaymax.matrix.silk.client.infrastructure.sw.annotation;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;
 

@@ -1,6 +1,5 @@
 package top.cbaymax.matrix.silk.client.layer;
 
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
@@ -9,10 +8,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
-@Getter
 public abstract class AbstractLayer<H extends Handler> {
 
-    private final List<H> chains;
+    public final List<H> chains;
 
     public AbstractLayer(@Autowired ApplicationContext springContext) {
         // todo 优雅调用

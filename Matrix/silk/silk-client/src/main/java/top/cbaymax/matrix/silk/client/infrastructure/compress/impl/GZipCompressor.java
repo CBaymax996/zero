@@ -1,10 +1,9 @@
 package top.cbaymax.matrix.silk.client.infrastructure.compress.impl;
 
 
-import top.cbaymax.matrix.silk.client.infrastructure.compress.CompressedEncoder;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import top.cbaymax.matrix.silk.client.infrastructure.compress.CompressedEncoder;
 import top.cbaymax.matrix.silk.client.infrastructure.compress.EncodeType;
 
 import java.io.ByteArrayInputStream;
@@ -17,7 +16,6 @@ import java.util.zip.GZIPOutputStream;
  * 默认压缩算法
  */
 @Component
-@Slf4j
 public class GZipCompressor implements CompressedEncoder {
 
 
@@ -32,7 +30,6 @@ public class GZipCompressor implements CompressedEncoder {
             gzip.write(raw.getBytes(DEFAULT_CHARACTER_SET));
             gzip.close();
         } catch (IOException e) {
-            log.error("GZip CompressedEncoder Encode Error");
             throw new RuntimeException("GZip CompressedEncoder Encode Error", e);
         }
         return outputStream.toString();
@@ -54,7 +51,6 @@ public class GZipCompressor implements CompressedEncoder {
                 outputStream.write(buffer, 0, n);
             }
         } catch (IOException e) {
-            log.error("GZip CompressedEncoder Decode Error");
             throw new RuntimeException("GZip CompressedEncoder Decode Error", e);
         }
 

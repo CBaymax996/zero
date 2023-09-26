@@ -1,25 +1,19 @@
 package top.cbaymax.matrix.silk.client.infrastructure.sw;
 
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
-import top.cbaymax.matrix.silk.infrastructure.sw.annotation.SwitchConfig;
-import top.cbaymax.matrix.silk.infrastructure.sw.annotation.SwitchField;
+import top.cbaymax.matrix.silk.client.infrastructure.sw.annotation.SwitchConfig;
+import top.cbaymax.matrix.silk.client.infrastructure.sw.annotation.SwitchField;
 
 import java.lang.reflect.Field;
-import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Stream;
 
-@Slf4j
 @Component
 public class SwitchListener {
 
@@ -52,7 +46,5 @@ public class SwitchListener {
             }
             this.fields.put(fieldKey, field);
         }
-        log.info("switch scan fields {}",
-                Optional.ofNullable(this.fields).map(Map::keySet).orElse(Collections.emptySet()));
     }
 }
