@@ -1,5 +1,5 @@
 import {createApp} from 'vue'
-import {router} from "./pages/RouteConfig";
+import {router} from "./pages/router";
 
 import App from './App.vue'
 
