@@ -1,6 +1,5 @@
 {
   "name": "silk-vue",
-  "version": "0.0.0",
   "private": true,
   "scripts": {
     "dev": "vite",
@@ -8,10 +7,21 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.3.4"
+    "@element-plus/icons-vue": "^1.1.4",
+    "@vueuse/core": "^8.2.0",
+    "@vueuse/integrations": "^8.3.1",
+    "axios": "^0.26.1",
+    "element-plus": "^2.1.4",
+    "universal-cookie": "^4.0.4",
+    "vue": "^3.2.25",
+    "vue-router": "^4.0.14"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.3.4",
-    "vite": "^4.4.9"
+    "@vitejs/plugin-vue": "^2.3.1",
+    "mockjs": "^1.1.0",
+    "unocss": "^0.31.2",
+    "vite": "^2.9.5",
+    "vite-plugin-pages": "^0.22.0",
+    "vite-plugin-vue-layouts": "^0.6.0"
   }
 }

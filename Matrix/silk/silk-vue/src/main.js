@@ -1,6 +1,12 @@
-import './assets/main.css'
-
 import {createApp} from 'vue'
+import {router} from "./pages/RouteConfig";
+
 import App from './App.vue'
 
-createApp(App).mount('#app')
+// 引入样式
+import 'uno.css'
+import 'element-plus/dist/index.css'
+
+
+createApp(App).use(router).mount('#app')
+
