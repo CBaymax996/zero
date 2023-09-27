@@ -30,3 +30,4 @@ bin/
 
 ### MAVEN ###
 !**/.mvn/
+/Matrix/silk/silk-vue/
