@@ -45,7 +45,7 @@ public class ResponseWrapper implements ResponseBodyAdvice<Object> {
                                   @Nonnull ServerHttpRequest request,
                                   @Nonnull ServerHttpResponse response) {
         if (body == null) {
-            return null;
+            return new Result<>();
         }
         if (body instanceof Result<?>) {
             return body;
