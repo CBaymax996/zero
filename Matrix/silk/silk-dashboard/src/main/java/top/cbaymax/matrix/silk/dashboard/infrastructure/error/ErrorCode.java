@@ -1,7 +1,7 @@
 package top.cbaymax.matrix.silk.dashboard.infrastructure.error;
 
 
-public interface ErrorCode {
-    String getCode();
-    String getMessage();
+import top.cbaymax.matrix.silk.dashboard.infrastructure.enumeration.IBaseEnum;
+
+public interface ErrorCode extends IBaseEnum<String> {
 }
