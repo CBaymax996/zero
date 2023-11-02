@@ -18,6 +18,11 @@ public class SilkError extends RuntimeException {
         this.message = errorCode.getMessage();
     }
 
+    public SilkError(ErrorCode errorCode, String customMessage) {
+        this.code = errorCode.getCode();
+        this.message = errorCode.getMessage() + ": " + customMessage;
+    }
+
     public static SilkErrorBuilder builder(ErrorCode code) {
         return new SilkErrorBuilder(code);
     }

@@ -14,17 +14,8 @@ public interface IBaseEnum<CODE> {
                 .orElse(null);
     }
 
-    default void init(CODE code, String msg) {
-        EnumContainer.putEnum(this, code, msg);
-    }
+    String getMessage();
 
-    default String getMessage() {
-        return EnumContainer.getEnumDefinition(this).msg();
-    }
-
-    default CODE getCode() {
-        return EnumContainer.getEnumDefinition(this).code();
-    }
-
+    CODE getCode();
 
 }
