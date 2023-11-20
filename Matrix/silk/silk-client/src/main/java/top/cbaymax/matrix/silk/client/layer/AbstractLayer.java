@@ -13,14 +13,23 @@ public abstract class AbstractLayer<H extends Handler> {
     public final List<H> chains;
 
     public AbstractLayer(@Autowired ApplicationContext springContext) {
-        // todo 优雅调用
-        Class<H> hClass = (Class<H>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        @SuppressWarnings("unchecked")
+        Class<H> hClass = (Class<H>) Optional.ofNullable(this.getClass())
+                .map(Class::getGenericSuperclass)
+                .filter(clz -> clz instanceof ParameterizedType)
+                .map(clz -> (ParameterizedType) clz)
+                .map(ParameterizedType::getActualTypeArguments)
+                .map(typeArray -> typeArray.length == 0 ? null : typeArray[0])
+                .filter(clz -> clz instanceof Class<?>)
+                .filter(clz -> Handler.class.isAssignableFrom((Class<?>) clz))
+                .orElse(null);
+
         Map<String, H> parsers = springContext.getBeansOfType(hClass);
+
         chains = Optional.of(parsers).map(Map::values).get()
                 .stream().filter(Objects::nonNull)
                 .sorted(Comparator.comparing(Handler::order))
                 .collect(Collectors.toList());
     }
-
 
 }

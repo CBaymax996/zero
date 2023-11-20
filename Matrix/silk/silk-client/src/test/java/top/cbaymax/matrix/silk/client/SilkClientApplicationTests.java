@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 class SilkClientApplicationTests {
 
     @Test
-    void contextLoads() {
-        assert true;
+    void loadClient() {
+        SilkClient demo = new SilkClient("demo");
     }
 
 }
