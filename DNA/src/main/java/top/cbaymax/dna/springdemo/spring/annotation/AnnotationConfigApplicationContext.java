@@ -11,29 +11,33 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class AnnotationConfigApplicationContext {
 
-
+    // /
     private static final String dirSplit = File.separator;
+    private static final String packageSplit = ".";
     private final ConcurrentHashMap<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
     private final Class<?> configClass;
     private final ConcurrentHashMap<String, Object> singletonObjects = new ConcurrentHashMap<>();
 
     public AnnotationConfigApplicationContext(Class<?> configClass) {
-        System.out.println("123" + dirSplit);
         this.configClass = configClass;
-        this.packageScan();
-        this.initialSingletonBeans();
+        this.scanPackage();
+        this.initializeSingleton();
 
     }
 
-    public Object getBean(String beanName) {
+    public <T> T getBean(String beanName, Class<T> clz) {
         if (!beanDefinitionMap.containsKey(beanName)) {
+            // bean not found
             throw new RuntimeException("can't find bean " + beanName);
         }
         BeanDefinition beanDefinition = beanDefinitionMap.get(beanName);
-        if (ScopeType.singleton.equals(beanDefinition.getScope())) {
-            return singletonObjects.get(beanName);
+        Object bean = ScopeType.singleton.equals(beanDefinition.getScope())
+                ? singletonObjects.get(beanName) : createBean(beanDefinition);
+        if (!clz.isInstance(bean)) {
+            throw new RuntimeException("class of bean not match");
         }
-        return createBean(beanDefinition);
+        return clz.cast(bean);
+
     }
 
     /**
@@ -58,7 +62,7 @@ public class AnnotationConfigApplicationContext {
         return new BeanDefinition(beanName, beanClass, scope);
     }
 
-    private void initialSingletonBeans() {
+    private void initializeSingleton() {
         beanDefinitionMap.forEach((beanName, beanDef) -> {
             // 单例bean
             if (ScopeType.singleton.equals(beanDef.getScope())) {
@@ -71,7 +75,7 @@ public class AnnotationConfigApplicationContext {
     /**
      * 包扫描
      */
-    private void packageScan() {
+    private void scanPackage() {
         // 解析 配置类
         // 注解 扫描路径
         ComponentScan componentScanAnnotation = configClass.getDeclaredAnnotation(ComponentScan.class);
@@ -92,7 +96,7 @@ public class AnnotationConfigApplicationContext {
         // app class loader
         ClassLoader classLoader = AnnotationConfigApplicationContext.class.getClassLoader();
         //
-        URL resource = classLoader.getResource(scanClassPath.replace(".", "/"));
+        URL resource = classLoader.getResource(scanClassPath.replace(packageSplit, dirSplit));
         assert resource != null;
         File file = new File(resource.getFile());
 
@@ -107,7 +111,7 @@ public class AnnotationConfigApplicationContext {
                         return;
                     }
                     String className = absolutePath.substring(absolutePath.indexOf("top"), absolutePath.indexOf(".class"))
-                            .replace("\\", ".");
+                            .replace(dirSplit, packageSplit);
                     System.out.println(className);
                     Class<?> beanClass = classLoader.loadClass(className);
                     if (beanClass.isAnnotationPresent(Component.class)) {
