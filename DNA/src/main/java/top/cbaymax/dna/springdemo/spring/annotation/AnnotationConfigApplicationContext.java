@@ -12,29 +12,66 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AnnotationConfigApplicationContext {
 
 
-    private Class<?> configClass;
-
-    private ConcurrentHashMap<String, Object> singletonObjects = new ConcurrentHashMap<>();
-    private ConcurrentHashMap<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
+    private static final String dirSplit = File.separator;
+    private final ConcurrentHashMap<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
+    private final Class<?> configClass;
+    private final ConcurrentHashMap<String, Object> singletonObjects = new ConcurrentHashMap<>();
 
     public AnnotationConfigApplicationContext(Class<?> configClass) {
+        System.out.println("123" + dirSplit);
         this.configClass = configClass;
-        this.scan();
+        this.packageScan();
+        this.initialSingletonBeans();
 
+    }
+
+    public Object getBean(String beanName) {
+        if (!beanDefinitionMap.containsKey(beanName)) {
+            throw new RuntimeException("can't find bean " + beanName);
+        }
+        BeanDefinition beanDefinition = beanDefinitionMap.get(beanName);
+        if (ScopeType.singleton.equals(beanDefinition.getScope())) {
+            return singletonObjects.get(beanName);
+        }
+        return createBean(beanDefinition);
+    }
+
+    /**
+     * 创建对象
+     */
+    private Object createBean(BeanDefinition beanDefinition) {
+        try {
+            Class<?> aClass = beanDefinition.getaClass();
+            return aClass.getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | NoSuchMethodException | IllegalAccessException |
+                 InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private BeanDefinition getBeanDefinition(Class<?> beanClass) {
+        Component componentAnnotation = beanClass.getAnnotation(Component.class);
+        String beanName = componentAnnotation.value();
+        // 判断是单例还是原型
+        Scope annotation = beanClass.getAnnotation(Scope.class);
+        ScopeType scope = annotation.value();
+        return new BeanDefinition(beanName, beanClass, scope);
+    }
+
+    private void initialSingletonBeans() {
         beanDefinitionMap.forEach((beanName, beanDef) -> {
             // 单例bean
-            if (beanDef.getScope().equals("singleton")) {
+            if (ScopeType.singleton.equals(beanDef.getScope())) {
                 singletonObjects.put(beanName, createBean(beanDef));
             }
-
         });
     }
 
 
-    private void scan() {
-
-        this.configClass = configClass;
-
+    /**
+     * 包扫描
+     */
+    private void packageScan() {
         // 解析 配置类
         // 注解 扫描路径
         ComponentScan componentScanAnnotation = configClass.getDeclaredAnnotation(ComponentScan.class);
@@ -74,14 +111,8 @@ public class AnnotationConfigApplicationContext {
                     System.out.println(className);
                     Class<?> beanClass = classLoader.loadClass(className);
                     if (beanClass.isAnnotationPresent(Component.class)) {
-                        System.out.println(beanClass);
-                        // 解析类，判断是单例还是原型
-                        // beanDefinition
-                        Component componentAnnotation = beanClass.getAnnotation(Component.class);
-                        String beanName = componentAnnotation.value();
-                        Scope annotation = beanClass.getAnnotation(Scope.class);
-                        String scope = annotation.value();
-                        beanDefinitionMap.put(beanName, new BeanDefinition(beanClass, scope));
+                        BeanDefinition beanDefinition = getBeanDefinition(beanClass);
+                        beanDefinitionMap.put(beanDefinition.getBeanName(), beanDefinition);
                     }
                 } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
@@ -89,29 +120,5 @@ public class AnnotationConfigApplicationContext {
 
             });
         }
-
-    }
-
-    // 创建对象
-
-    public Object createBean(BeanDefinition beanDefinition) {
-        try {
-            Class<?> aClass = beanDefinition.getaClass();
-            return aClass.getDeclaredConstructor().newInstance();
-        } catch (InstantiationException | NoSuchMethodException | IllegalAccessException |
-                 InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public Object getBean(String beanName) {
-        if (!beanDefinitionMap.containsKey(beanName)) {
-            throw new RuntimeException("can't find bean " + beanName);
-        }
-        BeanDefinition beanDefinition = beanDefinitionMap.get(beanName);
-        if (beanDefinition.getScope().equals("singleton")) {
-            return singletonObjects.get(beanName);
-        }
-        return createBean(beanDefinition);
     }
 }

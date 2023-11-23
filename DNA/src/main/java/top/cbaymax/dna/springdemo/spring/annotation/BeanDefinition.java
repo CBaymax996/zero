@@ -4,10 +4,13 @@ package top.cbaymax.dna.springdemo.spring.annotation;
  * @author 褚浩
  */
 public class BeanDefinition {
-    private Class<?> aClass;
-    private String scope;
 
-    public BeanDefinition(Class<?> aClass, String scope) {
+    private final Class<?> aClass;
+    private final String beanName;
+    private final ScopeType scope;
+
+    public BeanDefinition(String beanName, Class<?> aClass, ScopeType scope) {
+        this.beanName = beanName;
         this.aClass = aClass;
         this.scope = scope;
     }
@@ -16,15 +19,12 @@ public class BeanDefinition {
         return aClass;
     }
 
-    public void setaClass(Class<?> aClass) {
-        this.aClass = aClass;
+    public String getBeanName() {
+        return beanName;
     }
 
-    public String getScope() {
+    public ScopeType getScope() {
         return scope;
     }
 
-    public void setScope(String scope) {
-        this.scope = scope;
-    }
 }
