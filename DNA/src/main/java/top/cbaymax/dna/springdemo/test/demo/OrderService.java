@@ -1,4 +1,4 @@
-package top.cbaymax.dna.springdemo.test.service;
+package top.cbaymax.dna.springdemo.test.demo;
 
 import top.cbaymax.dna.springdemo.spring.annotation.Component;
 import top.cbaymax.dna.springdemo.spring.annotation.Scope;

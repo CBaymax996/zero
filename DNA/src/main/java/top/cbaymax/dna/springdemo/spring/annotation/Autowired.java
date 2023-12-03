@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
  * @author 褚浩
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
+@Target({ElementType.FIELD, ElementType.METHOD})
 public @interface Autowired {
 }

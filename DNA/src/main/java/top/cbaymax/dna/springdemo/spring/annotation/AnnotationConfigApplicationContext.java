@@ -1,7 +1,7 @@
 package top.cbaymax.dna.springdemo.spring.annotation;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
@@ -11,9 +11,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class AnnotationConfigApplicationContext {
 
-    // /
-    private static final String dirSplit = File.separator;
-    private static final String packageSplit = ".";
     private final ConcurrentHashMap<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
     private final Class<?> configClass;
     private final ConcurrentHashMap<String, Object> singletonObjects = new ConcurrentHashMap<>();
@@ -46,9 +43,31 @@ public class AnnotationConfigApplicationContext {
     private Object createBean(BeanDefinition beanDefinition) {
         try {
             Class<?> aClass = beanDefinition.getaClass();
-            return aClass.getDeclaredConstructor().newInstance();
-        } catch (InstantiationException | NoSuchMethodException | IllegalAccessException |
-                 InvocationTargetException e) {
+            Object bean = aClass.getDeclaredConstructor().newInstance();
+            // 依赖注入
+            for (Field field : aClass.getDeclaredFields()) {
+                if (field.isAnnotationPresent(Autowired.class)) {
+                    // todo 解决依赖顺序，循环依赖
+                    Object fieldBean = getBean(field.getName(), field.getType());
+                    field.setAccessible(true);
+                    field.set(bean, fieldBean);
+                }
+            }
+
+            // Aware回调
+            if (bean instanceof BeanNameAware) {
+                ((BeanNameAware) bean).setBeanName(beanDefinition.getBeanName());
+            }
+
+            // 初始化
+            if (bean instanceof InitializingBean) {
+                ((InitializingBean) bean).afterPropertiesSet();
+            }
+            // bean post processor
+
+
+            return bean;
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -96,10 +115,11 @@ public class AnnotationConfigApplicationContext {
         // app class loader
         ClassLoader classLoader = AnnotationConfigApplicationContext.class.getClassLoader();
         //
-        URL resource = classLoader.getResource(scanClassPath.replace(packageSplit, dirSplit));
+        URL resource = classLoader.getResource(scanClassPath.replace(".", "/"));
         assert resource != null;
         File file = new File(resource.getFile());
 
+        // todo 递归扫文件
         if (file.isDirectory()) {
             File[] files = file.listFiles();
             assert files != null;
@@ -111,7 +131,7 @@ public class AnnotationConfigApplicationContext {
                         return;
                     }
                     String className = absolutePath.substring(absolutePath.indexOf("top"), absolutePath.indexOf(".class"))
-                            .replace(dirSplit, packageSplit);
+                            .replace("\\", ".");
                     System.out.println(className);
                     Class<?> beanClass = classLoader.loadClass(className);
                     if (beanClass.isAnnotationPresent(Component.class)) {
