@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/Matrix/silk/silk.iml" filepath="$PROJECT_DIR$/Matrix/silk/silk.iml" />
       <module fileurl="file://$PROJECT_DIR$/Matrix/silk/silk-dashboard/silk-dashboard.iml" filepath="$PROJECT_DIR$/Matrix/silk/silk-dashboard/silk-dashboard.iml" />
       <module fileurl="file://$PROJECT_DIR$/Matrix/silk/silk-vue.iml" filepath="$PROJECT_DIR$/Matrix/silk/silk-vue.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Matrix/spring-demo/spring-demo.iml" filepath="$PROJECT_DIR$/Matrix/spring-demo/spring-demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/zero.iml" filepath="$PROJECT_DIR$/zero.iml" />
     </modules>
   </component>

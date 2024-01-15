@@ -3,6 +3,7 @@
   <component name="CompilerConfiguration">
     <excludeFromCompile>
       <directory url="file://$PROJECT_DIR$/dna/src/main/resources/archetype-resources" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/Matrix/ink/src/main/resources/archetype-resources" includeSubdirectories="true" />
     </excludeFromCompile>
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
@@ -11,16 +12,38 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="silk-client" />
+        <module name="agent" />
+        <module name="ink-demo" />
         <module name="dna" />
+        <module name="sagent" />
         <module name="silk-dashboard" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="ear" target="1.5" />
+      <module name="ejbs" target="1.7" />
+      <module name="ink (1)" target="17" />
+      <module name="ink (2)" target="17" />
+      <module name="ink-demo (1) (top.cbaymax.matrix)" target="17" />
+      <module name="ink-demo (2) (top.cbaymax.matrix.ink)" target="17" />
+      <module name="logging" target="1.7" />
+      <module name="myAgent" target="17" />
+      <module name="PermainAgent" target="17" />
+      <module name="primary-source" target="1.7" />
+      <module name="projects" target="1.5" />
+      <module name="sagent" target="17" />
+      <module name="servlet" target="1.7" />
+      <module name="servlets" target="1.5" />
       <module name="spring-demo" target="17" />
+      <module name="untitled" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ink (1)" options="-parameters" />
+      <module name="ink-demo" options="" />
+      <module name="ink-demo (2) (top.cbaymax.matrix.ink)" options="-parameters" />
+      <module name="sagent" options="-parameters" />
       <module name="silk-client" options="-parameters" />
       <module name="silk-dashboard" options="-parameters" />
       <module name="spring-demo" options="-parameters" />
